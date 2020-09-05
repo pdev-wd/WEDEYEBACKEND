@@ -35,7 +35,6 @@ let transporter = nodemailer.createTransport({
 
 exports.create = (req, res) => {
   var type = req.body.type;
-  console.log(req.body)
   console.log("============ create ============");
   console.log(type);
   console.log("============ create ============");
@@ -117,7 +116,6 @@ exports.addMulti = (req, res) => {
   res.status(200).json(infoArr);
 };
 exports.register = (req, res) => {
-  console.log("register", req.body)
   if (!req.body.username || !req.body.hash) {
     return res.status(400).json({ message: "All fields required" });
   }
@@ -144,35 +142,23 @@ exports.login = (req, res) => {
   if (!req.body.email || !req.body.hash) {
     return res.status(400).json(req.body.email);
   }
-  console.log(req.body.email);
-  Vendor.findOne({ email: req.body.email }).then((user) => {
-    if (user) {
-      passport.authenticate("vendor", (err, vendor, info) => {
-        let token;
-        console.log("login2", vendor);
-
-        console.log("login2", vendor);
-
-        if (err) {
-          console.log("err");
-          return res.status(500).json(err);
-        }
-        if (vendor) {
-          console.log("vendor");
-          token = vendor.generateJwt();
-          res.status(200).json({ token });
-        } else {
-          console.log("login3");
-          console.log(info);
-          res.status(401).json(info);
-        }
-      })(req, res);
-    } else {
-      console.log("User doesn't exist!..")
-      res.status(200).send({ message: "User doesn't exist!.." })
+  console.log("login2");
+  passport.authenticate("vendor", (err, vendor, info) => {
+    let token;
+    if (err) {
+      console.log("err");
+      return res.status(500).json(err);
     }
-  })
-
+    if (vendor) {
+      console.log("vendor");
+      // token = vendor.generateJwt();
+      res.status(200).json({ token });
+    } else {
+      console.log("login3");
+      console.log(info);
+      res.status(401).json(info);
+    }
+  })(req, res);
 };
 exports.update = (req, res) => {
   console.log(req.body);
@@ -488,20 +474,6 @@ exports.getAllImgs = (req, res, next) => {
     .populate(["vendorId"])
     .exec();
 };
-
-exports.getOneVendorImg = (req, res, next) => {
-  console.log(req.body._id, "images Id")
-  Images.find({ vendorId: req.body._id, isMainImage: true }, function (err, vendor) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(vendor, "images")
-      res.json(vendor);
-    }
-  })
-  // .populate(["vendorId"])
-  // .exec();
-};
 // exports.getAllPhotos = (req, res, next) => {
 //         function getFilesFromDir(dir, fileTypes) {
 //             var filesToReturn = [];
@@ -605,7 +577,6 @@ exports.search = (req, res) => {
   //         }
   //     })
   // }).populate(['make','model']).exec();
-  console.log(query, "query");
   Vendor.find(query)
     .sort({ membership: -1 })
     .exec(function (err, blogs) {
@@ -682,7 +653,6 @@ exports.getAll = (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(vendor)
       res.json(vendor);
     }
   });
@@ -748,8 +718,8 @@ exports.phoneverify = (req, res) => {
   });
 
   const from = 8613322166930;
-  const to = (Number)(req.body.phone);
-  // const to = 8613322166930;
+  // const to = (Number)(req.body.phone);
+  const to = 8613322166930;
   const text = req.body.code;
   nexmo.message.sendSms(
     from,

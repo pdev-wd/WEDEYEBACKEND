@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var PhotographerSchema = new mongoose.Schema({
     otherWorkLocation: [{ type: String }],
-    startingPrice:{type:Number},
+    startingPrice: { type: Number },
     travelOtherIndianCities: { type: Boolean },
     travelCost: { type: String },
     serviceOffered: {
@@ -15,7 +15,8 @@ var PhotographerSchema = new mongoose.Schema({
         drone: { type: Number },
         crane: { type: Number },
         photobooth: { type: Number }
-    }
+    },
+    servicePhotography: [String]
 
 }, { _id: false, toJSON: { getters: true } });
 
