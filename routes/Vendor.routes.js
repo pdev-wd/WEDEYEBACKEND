@@ -13,6 +13,8 @@ module.exports = (app) => {
   // app.post('/get-album', vendor.get_album);
   app.post("/getAllImgs", vendor.getAllImgs);
   app.post("/getOneVendorImage", vendor.getOneVendorImg)
+  app.get("/getImageDetails/:id", vendor.getVendorImages);
+  app.delete("/deleteImage/:id", vendor.deleteImage);
   // app.post('/getAllPhotos', vendor.getAllPhotos);
   app.post("/get-video", vendor.get_video);
   app.post("/get-photo", vendor.get_photo);
@@ -44,4 +46,6 @@ module.exports = (app) => {
   app.post("/vendor/reduceNum", vendor.reduceNum);
 
   app.post("/vendor/addMulti", vendor.addMulti);
+
+  app.post("/filter", vendor.filter);
 };

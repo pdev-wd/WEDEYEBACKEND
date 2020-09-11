@@ -13,4 +13,5 @@ module.exports = () => {
     require('../models/Semail');
     require('../models/Images.Model');
     require('../models/Blogcategory');
+    require('../models/Filter.model');
 };

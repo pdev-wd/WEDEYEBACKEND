@@ -66,6 +66,8 @@ exports.update = (req, res) => {
     car.additionalFacilities.airConditioned =
       req.body.airConditioned == "" ? false : true;
     car.additionalFacilities.bar = req.body.bar == "" ? false : true;
+    car.additionalFacilities.restaurant = req.body.restaurant == "" ? false : true;
+    car.additionalFacilities.electricityBackup = req.body.electricityBackup == "" ? false : true;
     car.additionalFacilities.conferenceCenter =
       req.body.conferenceCenter == "" ? false : true;
     car.additionalFacilities.wifi = req.body.wifi == "" ? false : true;

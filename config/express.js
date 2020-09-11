@@ -42,6 +42,7 @@ module.exports = () => {
   require("../routes/Owner.routes")(app);
   require("../routes/Area.routes")(app);
   require("../routes/Semail.routes")(app);
+  require("../routes/Filter.router")(app);
   // require('../routes/Make.routes')(app);
   // require('../routes/Model.routes')(app);
   // require('../routes/Ticket.routes')(app);

@@ -11,7 +11,7 @@ var VenueSchema = new mongoose.Schema({
             fixedCapacity: { type: Number },
         }
     ],
-    maxmiumGuests: { type: Number },
+    maximumGuestCapacity: { type: Number },
     // nameOfArea: { type: String },
     // typeOfArea: { type: String },
     // floatingCapacity: { type: Number },

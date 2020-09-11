@@ -477,6 +477,8 @@ exports.getTotalAllImgs = (req, res, next) => {
     .populate(["vendorId"])
     .exec();
 };
+
+//All vendors images
 exports.getAllImgs = (req, res, next) => {
   Images.find({ vendorId: req.body._id }, function (err, vendor) {
     if (err) {
@@ -489,8 +491,8 @@ exports.getAllImgs = (req, res, next) => {
     .exec();
 };
 
+//Main images for specific vendor
 exports.getOneVendorImg = (req, res, next) => {
-  console.log(req.body._id, "images Id")
   Images.find({ vendorId: req.body._id, isMainImage: true }, function (err, vendor) {
     if (err) {
       console.log(err);
@@ -499,9 +501,50 @@ exports.getOneVendorImg = (req, res, next) => {
       res.json(vendor);
     }
   })
-  // .populate(["vendorId"])
-  // .exec();
 };
+
+//All images for single vendor
+exports.getVendorImages = (req, res, next) => {
+  console.log(req.params.id, "images Id")
+  Images.find({ vendorId: req.params.id }, function (err, vendor) {
+    if (err) {
+      console.log(err);
+    } else {
+      var sortedArray = vendor.sort((vendor) => {
+        if (vendor.isMainImage) {
+          return -1;
+        }
+
+        if (!vendor.isMainImage) {
+          return 1;
+        }
+
+        return 0;
+      });
+      console.log(sortedArray, "soted");
+      res.send(sortedArray);
+    }
+  })
+};
+
+exports.deleteImage = (req, res) => {
+  try {
+    Images.findByIdAndDelete(req.params.id, (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        console.log("Images Deleted successfully");
+        res.status(200).json({
+          msg: "Image deleted successfully !.."
+        });
+      }
+    });
+  } catch (e) {
+    throw e;
+  }
+};
+
+
 // exports.getAllPhotos = (req, res, next) => {
 //         function getFilesFromDir(dir, fileTypes) {
 //             var filesToReturn = [];
@@ -552,6 +595,7 @@ exports.getOneVendorImg = (req, res, next) => {
 // }
 //dynamic sarch
 exports.search = (req, res) => {
+  console.log(req.body, "body");
   var query = {};
   console.log("1");
   Object.assign(query, { status: "allow" });
@@ -618,7 +662,7 @@ exports.search = (req, res) => {
         //     var temp = sub['createDate'].toString().slice('0, 10').split('-');
         //     blogs[index]['createDate'] = temp[1] + '/' + temp[2] + '/' + temp[0]
         // })
-        // console.log(blogs)
+        console.log(blogs, "data")
         res.json(blogs);
       }
     });
@@ -947,3 +991,17 @@ exports.reduceNum = (req, res) => {
     }
   });
 };
+
+//Filter
+exports.filter = (req, res, next) => {
+  if (req.body.budget == "0") {
+    var budget = 100000;
+  }
+  Vendor.find({ area: req.body.area }, function (err, vendor) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(vendor);
+    }
+  })
+}
