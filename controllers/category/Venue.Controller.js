@@ -33,18 +33,18 @@ exports.update = (req, res) => {
   Venue.findById(userId, function (err, car) {
     Object.assign(car, req.body);
 
-    if (!req.body.costPer)
-      car.costPer = req.body.costPer;
-    if (!req.body.perDayPrice)
-      car.perDayPrice = req.body.perDayPrice;
-    if (!req.body.perNonVegPrice)
-      car.perNonVegPrice = req.body.perNonVegPrice;
-    if (!req.body.perVegPrice)
-      car.perVegPrice = req.body.perVegPrice;
-    if (!req.body.noCarsParkedControl)
-      car.noCarsParkedControl = req.body.noCarsParkedControl;
-    if (req.body.noRoomsControl)
-      car.noRoomsControl = req.body.noRoomsControl;
+    // if (!req.body.costPer)
+    //   car.costPer = req.body.costPer;
+    // if (req.body.perDayPrice)
+    //   car.perDayPrice = req.body.perDayPrice;
+    // if (req.body.perNonVegPrice)
+    //   car.perNonVegPrice = req.body.perNonVegPrice;
+    // if (req.body.perVegPrice)
+    //   car.perVegPrice = req.body.perVegPrice;
+    // if (req.body.noCarsParkedControl)
+    //   car.noCarsParkedControl = req.body.noCarsParkedControl;
+    // if (req.body.noRoomsControl)
+    //   car.noRoomsControl = req.body.noRoomsControl;
     if (!req.body.modifyDate)
       car.modifyDate = new Date().toString().slice(0, 10);
     if (req.body.basicDetailsStatus)
@@ -66,8 +66,10 @@ exports.update = (req, res) => {
     car.additionalFacilities.airConditioned =
       req.body.airConditioned == "" ? false : true;
     car.additionalFacilities.bar = req.body.bar == "" ? false : true;
-    car.additionalFacilities.restaurant = req.body.restaurant == "" ? false : true;
-    car.additionalFacilities.electricityBackup = req.body.electricityBackup == "" ? false : true;
+    car.additionalFacilities.restaurant =
+      req.body.restaurant == "" ? false : true;
+    car.additionalFacilities.electricityBackup =
+      req.body.electricityBackup == "" ? false : true;
     car.additionalFacilities.conferenceCenter =
       req.body.conferenceCenter == "" ? false : true;
     car.additionalFacilities.wifi = req.body.wifi == "" ? false : true;

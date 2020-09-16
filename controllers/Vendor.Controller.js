@@ -35,7 +35,7 @@ let transporter = nodemailer.createTransport({
 
 exports.create = (req, res) => {
   var type = req.body.type;
-  console.log(req.body)
+  console.log(req.body);
   console.log("============ create ============");
   console.log(type);
   console.log("============ create ============");
@@ -117,7 +117,7 @@ exports.addMulti = (req, res) => {
   res.status(200).json(infoArr);
 };
 exports.register = (req, res) => {
-  console.log("register", req.body)
+  console.log("register", req.body);
   if (!req.body.username || !req.body.hash) {
     return res.status(400).json({ message: "All fields required" });
   }
@@ -168,11 +168,10 @@ exports.login = (req, res) => {
         }
       })(req, res);
     } else {
-      console.log("User doesn't exist!..")
-      res.status(200).send({ message: "User doesn't exist!.." })
+      console.log("User doesn't exist!..");
+      res.status(200).send({ message: "User doesn't exist!.." });
     }
-  })
-
+  });
 };
 exports.update = (req, res) => {
   console.log(req.body);
@@ -233,6 +232,7 @@ exports.delete = (req, res) => {
   }
 };
 exports.findById = (req, res) => {
+  console.log(req.params, req.body, "both");
   // var role = req.type;
   // if (role == 0){
   //     Vendor.findById(req.params.id, function(err, user) {
@@ -248,6 +248,7 @@ exports.findById = (req, res) => {
   var role = req.logtype;
   // console.log(req.userId)
   if (role == 0) {
+    console.log(req.params, req.body, "both1");
     Vendor.findById(req.userId, function (err, client) {
       if (!client) res.status(500).send("data is not found");
       else res.status(200).json(client);
@@ -256,6 +257,7 @@ exports.findById = (req, res) => {
   } else {
     // res.json('you are not admin , cannot access !');
     console.log("abc");
+    console.log(req.params, req.body, "both2");
     // console.log(req.headers.token)
     Vendor.findOne({ providerUserID: req.providerId }, function (err, client) {
       if (!client) res.status(500).send("data is not found");
@@ -264,6 +266,16 @@ exports.findById = (req, res) => {
     });
   }
 };
+
+exports.getOneVendor = (req, res) => {
+  console.log(req.params.id, "mytest");
+  Vendor.findById({ _id: req.params.id }, function (err, vendor) {
+    if (err) console.log("Error while fetching data");
+    else console.log("vendor data", vendor);
+    res.send(vendor);
+  });
+};
+
 exports.setMainImg = (req, res) => {
   Vendor.findById(req.body.id, function (err, client) {
     if (!client) res.status(500).send("data is not found");
@@ -493,19 +505,22 @@ exports.getAllImgs = (req, res, next) => {
 
 //Main images for specific vendor
 exports.getOneVendorImg = (req, res, next) => {
-  Images.find({ vendorId: req.body._id, isMainImage: true }, function (err, vendor) {
+  Images.find({ vendorId: req.body._id, isMainImage: true }, function (
+    err,
+    vendor
+  ) {
     if (err) {
       console.log(err);
     } else {
-      console.log(vendor, "images")
+      console.log(vendor, "images");
       res.json(vendor);
     }
-  })
+  });
 };
 
 //All images for single vendor
 exports.getVendorImages = (req, res, next) => {
-  console.log(req.params.id, "images Id")
+  console.log(req.params.id, "images Id");
   Images.find({ vendorId: req.params.id }, function (err, vendor) {
     if (err) {
       console.log(err);
@@ -524,7 +539,7 @@ exports.getVendorImages = (req, res, next) => {
       console.log(sortedArray, "soted");
       res.send(sortedArray);
     }
-  })
+  });
 };
 
 exports.deleteImage = (req, res) => {
@@ -535,7 +550,7 @@ exports.deleteImage = (req, res) => {
       } else {
         console.log("Images Deleted successfully");
         res.status(200).json({
-          msg: "Image deleted successfully !.."
+          msg: "Image deleted successfully !..",
         });
       }
     });
@@ -543,7 +558,6 @@ exports.deleteImage = (req, res) => {
     throw e;
   }
 };
-
 
 // exports.getAllPhotos = (req, res, next) => {
 //         function getFilesFromDir(dir, fileTypes) {
@@ -662,7 +676,7 @@ exports.search = (req, res) => {
         //     var temp = sub['createDate'].toString().slice('0, 10').split('-');
         //     blogs[index]['createDate'] = temp[1] + '/' + temp[2] + '/' + temp[0]
         // })
-        console.log(blogs, "data")
+        console.log(blogs, "data");
         res.json(blogs);
       }
     });
@@ -726,7 +740,7 @@ exports.getAll = (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(vendor)
+      console.log(vendor);
       res.json(vendor);
     }
   });
@@ -792,7 +806,7 @@ exports.phoneverify = (req, res) => {
   });
 
   const from = 8613322166930;
-  const to = (Number)(req.body.phone);
+  const to = Number(req.body.phone);
   // const to = 8613322166930;
   const text = req.body.code;
   nexmo.message.sendSms(
@@ -1003,5 +1017,5 @@ exports.filter = (req, res, next) => {
     } else {
       res.json(vendor);
     }
-  })
-}
+  });
+};
