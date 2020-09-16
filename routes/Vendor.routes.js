@@ -12,7 +12,7 @@ module.exports = (app) => {
   app.post("/addPhoto", vendor.addPhoto);
   // app.post('/get-album', vendor.get_album);
   app.post("/getAllImgs", vendor.getAllImgs);
-  app.post("/getOneVendorImage", vendor.getOneVendorImg)
+  app.post("/getOneVendorImage", vendor.getOneVendorImg);
   app.get("/getImageDetails/:id", vendor.getVendorImages);
   app.delete("/deleteImage/:id", vendor.deleteImage);
   // app.post('/getAllPhotos', vendor.getAllPhotos);
@@ -22,6 +22,7 @@ module.exports = (app) => {
   // app.get("/auth/vendor/:id", VerifyToken, vendor.findById);
   app.get("/vendor/getAll", vendor.getAll);
   app.post("/auth/vendor/:id", VerifyToken, vendor.findById);
+  app.get("/vendor/:id", vendor.getOneVendor);
   app.post("/vendor/getAll", vendor.getAll);
   app.post("/auth/vendor-detail", vendor.findByIdDetail);
   app.post("/auth/cpass", VerifyToken, vendor.cPass);
