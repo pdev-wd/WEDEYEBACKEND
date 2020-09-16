@@ -12,12 +12,15 @@ module.exports = (app) => {
   app.post("/addPhoto", vendor.addPhoto);
   // app.post('/get-album', vendor.get_album);
   app.post("/getAllImgs", vendor.getAllImgs);
+  app.post("/getOneVendorImage", vendor.getOneVendorImg)
+  app.get("/getImageDetails/:id", vendor.getVendorImages);
+  app.delete("/deleteImage/:id", vendor.deleteImage);
   // app.post('/getAllPhotos', vendor.getAllPhotos);
   app.post("/get-video", vendor.get_video);
   app.post("/get-photo", vendor.get_photo);
   app.delete("/auth/vendor/:id", VerifyToken, vendor.delete);
   // app.get("/auth/vendor/:id", VerifyToken, vendor.findById);
-  // app.get("/vendor/getAll", vendor.getAll);
+  app.get("/vendor/getAll", vendor.getAll);
   app.post("/auth/vendor/:id", VerifyToken, vendor.findById);
   app.post("/vendor/getAll", vendor.getAll);
   app.post("/auth/vendor-detail", vendor.findByIdDetail);
@@ -43,4 +46,6 @@ module.exports = (app) => {
   app.post("/vendor/reduceNum", vendor.reduceNum);
 
   app.post("/vendor/addMulti", vendor.addMulti);
+
+  app.post("/filter", vendor.filter);
 };
