@@ -290,11 +290,13 @@ exports.getAll = (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      console.log(client, "clients List");
       res.json(client);
     }
   });
 };
 exports.updateClientVendor = (req, res) => {
+  console.log(req.body, "body");
   // var role = req.type;
   // var clientId = req.clientId;
   // if (role == 0){
