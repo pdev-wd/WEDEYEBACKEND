@@ -51,6 +51,7 @@ exports.list = (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      console.log(vendor, "cityLocation");
       res.json(vendor);
     }
   }).populate("cityId");
